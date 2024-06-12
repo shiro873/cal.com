@@ -237,6 +237,11 @@ export default function Signup({
   const isPlatformUser = redirectUrl?.includes("platform") && redirectUrl?.includes("new");
 
   const signUp: SubmitHandler<FormValues> = async (_data) => {
+    console.log("_DATA", {
+      ..._data,
+      language: i18n.language,
+      token: token,
+    });
     const { cfToken, ...data } = _data;
     await fetch("/api/auth/signup", {
       body: JSON.stringify({

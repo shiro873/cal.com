@@ -24,7 +24,9 @@ import {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const data = req.body;
+  console.log(`'req.body ------>' ${JSON.stringify(req.body)}`);
   const { email, password, language, token } = signupSchema.parse(data);
+  console.log(`'after validate ------>' ${email}`);
 
   const username = slugify(data.username);
   const userEmail = email.toLowerCase();
@@ -182,5 +184,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  res.status(201).json({ message: "Created user" });
+  const id = prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+    select: {
+      id: true,
+    },
+  });
+  res.status(201).json({ message: "Created user", calUserId: id });
 }

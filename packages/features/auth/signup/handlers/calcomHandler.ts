@@ -28,6 +28,7 @@ import {
 const log = logger.getSubLogger({ prefix: ["signupCalcomHandler"] });
 
 async function handler(req: RequestWithUsernameStatus, res: NextApiResponse) {
+  console.log(`'req.body calcom handler ------>' ${JSON.stringify(req.body)}`);
   const {
     email: _email,
     password,
