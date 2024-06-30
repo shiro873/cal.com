@@ -78,7 +78,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const userCount = await prisma.user.count();
+  const userCount = await prisma.user?.count();
   if (userCount === 0) {
     // Proceed to new onboarding to create first admin user
     return {

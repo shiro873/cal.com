@@ -14,7 +14,7 @@ type GetOptions = {
 const listPaginatedHandler = async ({ input }: GetOptions) => {
   const { cursor, limit, searchTerm } = input;
 
-  const getTotalUsers = await prisma.user.count();
+  const getTotalUsers = await prisma.user?.count();
 
   let searchFilters: Prisma.UserWhereInput = {};
 

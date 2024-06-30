@@ -11,7 +11,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { req } = context;
 
   const ssr = await ssrInit(context);
-  const userCount = await prisma.user.count();
+  const userCount = await prisma.user?.count();
 
   const session = await getServerSession({ req });
 

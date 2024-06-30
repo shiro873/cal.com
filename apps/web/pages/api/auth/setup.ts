@@ -22,7 +22,7 @@ const querySchema = z.object({
 });
 
 async function handler(req: NextApiRequest) {
-  const userCount = await prisma.user.count();
+  const userCount = await prisma.user?.count();
   if (userCount !== 0) {
     throw new HttpError({ statusCode: 400, message: "No setup needed." });
   }

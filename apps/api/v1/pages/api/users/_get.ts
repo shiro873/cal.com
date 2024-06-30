@@ -60,7 +60,7 @@ export async function getHandler(req: NextApiRequest) {
   }
 
   const [total, data] = await prisma.$transaction([
-    prisma.user.count({ where }),
+    prisma.user?.count({ where }),
     prisma.user.findMany({ where, take, skip }),
   ]);
   const users = schemaUsersReadPublic.parse(data);
