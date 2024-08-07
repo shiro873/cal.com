@@ -192,5 +192,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       id: true,
     },
   });
-  res.status(201).json({ message: "Created user", calUserId: id });
+  res.status(200).json({ message: "Created user", calUserId: id });
 }
