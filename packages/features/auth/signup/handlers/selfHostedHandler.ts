@@ -30,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const username = slugify(data.username);
   const userEmail = email.toLowerCase();
+  let createdUser = null;
 
   if (!username) {
     res.status(422).json({ message: "Invalid username" });
@@ -119,7 +120,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         user,
         team,
       });
-
+      createdUser = user;
       closeComUpsertTeamUser(team, user, membership.role);
 
       // Accept any child team invites for orgs.
@@ -152,7 +153,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
     }
-    await prisma.user.upsert({
+    const user = await prisma.user.upsert({
       where: { email: userEmail },
       update: {
         username: correctedUsername,
@@ -172,7 +173,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         identityProvider: IdentityProvider.CAL,
       },
     });
-
+    createdUser = user;
     if (process.env.AVATARAPI_USERNAME && process.env.AVATARAPI_PASSWORD) {
       await prefillAvatar({ email: userEmail });
     }
@@ -192,5 +193,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       id: true,
     },
   });
-  res.status(200).json({ message: "Created user", calUserId: id });
+  console.log("id", id, createdUser);
+  res.status(200).json({ message: "Created user", calUserId: createdUser?.id });
 }

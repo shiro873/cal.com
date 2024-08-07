@@ -32,8 +32,8 @@ async function main(): Promise<void> {
       ...process.env,
     },
   });
-  console.log(stdout);
-  console.error(stderr);
+  console.log("stdOut ------ ", stdout);
+  console.error("stderr ------- ", stderr);
 }
 
 main().catch((e) => {
